@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Pengetahuan Umum</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .question {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .option {
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Selamat Datang di Quiz Pengetahuan Umum!</h1>
+
+    <div id="quiz-container">
+        <div class="question" id="question"></div>
+        <div class="options" id="options"></div>
+        <button onclick="nextQuestion()">Next</button>
+    </div>
+
+    <script>
+        var questions = [
+            {
+                question: "Apa ibukota Indonesia?",
+                options: ["Jakarta", "Surabaya", "Bandung", "Yogyakarta"],
+                correctAnswer: "Jakarta"
+            },
+            {
+                question: "Siapakah presiden pertama Indonesia?",
+                options: ["Soekarno", "Soeharto", "Megawati", "Jokowi"],
+                correctAnswer: "Soekarno"
+            },
+            {
+                question: "Berapa jumlah provinsi di Indonesia?",
+                options: ["30", "33", "34", "35"],
+                correctAnswer: "34"
+            }
+        ];
+
+        var currentQuestionIndex = 0;
+
+        function displayQuestion() {
+            var currentQuestion = questions[currentQuestionIndex];
+            document.getElementById("question").innerHTML = currentQuestion.question;
+
+            var optionsContainer = document.getElementById("options");
+            optionsContainer.innerHTML = "";
+
+            currentQuestion.options.forEach(function (option, index) {
+                var button = document.createElement("button");
+                button.textContent = option;
+                button.className = "option";
+                button.onclick = function () {
+                    checkAnswer(option);
+                };
+
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selectedAnswer) {
+            var currentQuestion = questions[currentQuestionIndex];
+
+            if (selectedAnswer === currentQuestion.correctAnswer) {
+                alert("Jawaban benar!");
+            } else {
+                alert("Maaf, jawaban salah. Jawaban yang benar adalah: " + currentQuestion.correctAnswer);
+            }
+
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                displayQuestion();
+            } else {
+                alert("Anda telah menyelesaikan quiz!");
+                resetQuiz();
+            }
+        }
+
+        function resetQuiz() {
+            currentQuestionIndex = 0;
+            displayQuestion();
+        }
+
+        // Memulai quiz saat halaman dimuat
+        window.onload = displayQuestion;
+    </script>
+
+</body>
+</html>
